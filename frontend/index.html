@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enterprise Expert Knowledge Worker — Agentic AI Platform</title>
+  <meta name="description" content="Ask questions, investigate policies, retrieve evidence and complete approved workflows with an AI knowledge worker.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="/styles/app.css?v=5">
+</head>
+<body>
+
+  <!-- ============ NAVIGATION ============ -->
+  <header class="nav" id="nav">
+    <a href="#knowledge" class="brand" data-nav="knowledge" aria-label="Enterprise Knowledge home">
+      <svg class="brand-mark" viewBox="0 0 32 32" width="30" height="30" aria-hidden="true">
+        <path d="M16 2 4 7v9c0 7 5 12.5 12 14 7-1.5 12-7 12-14V7L16 2Z" fill="none" stroke="currentColor" stroke-width="2"/>
+        <path d="m11 16.5 4 4 7-8.5" stroke="var(--accent)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-text"><strong>ENTERPRISE KNOWLEDGE</strong><small>AI Policy Intelligence</small></span>
+    </a>
+
+    <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav class="nav-links" id="nav-links" aria-label="Main">
+      <a href="#knowledge" data-nav="knowledge" id="nav-knowledge">Knowledge</a>
+      <a href="#agents" data-nav="agents" id="nav-agents">Agents</a>
+      <a href="#sources" data-nav="sources" id="nav-sources">Library</a>
+      <a href="#activity" data-nav="activity" id="nav-activity">Activity</a>
+      <a href="#evaluation" data-nav="evaluation" id="nav-evaluation">Benchmarks</a>
+      <a href="#updates" data-nav="updates" id="nav-updates">Updates</a>
+      <a href="#faq" data-nav="faq" id="nav-faq">FAQ</a>
+    </nav>
+
+    <div class="nav-right">
+      <label class="role-pill-select" title="Switch enterprise persona to test role-based access control">
+        <span class="role-dot" id="role-dot"></span>
+        <select id="role-selector" aria-label="Active persona">
+          <option value="employee" selected>Rahul Sharma · Employee</option>
+          <option value="manager">Elena Rostova · Manager</option>
+          <option value="hr">Sarah Jenkins · HR</option>
+          <option value="legal">Neha Gupta · Legal</option>
+          <option value="admin">David Chen · Admin</option>
+        </select>
+      </label>
+      <a href="#knowledge" class="btn btn-primary btn-sm" id="nav-cta">Ask a question <span aria-hidden="true">→</span></a>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ============ 1. KNOWLEDGE (HOME + CHAT) ============ -->
+    <section id="view-knowledge" class="view active">
+
+      <!-- Hero -->
+      <div class="hero">
+        <div class="hero-bg" aria-hidden="true">
+          <div class="hero-glow"></div>
+          <div class="hero-grid"></div>
+          <svg class="hero-radar" viewBox="0 0 600 600">
+            <circle cx="300" cy="300" r="290" /><circle cx="300" cy="300" r="220" /><circle cx="300" cy="300" r="150" /><circle cx="300" cy="300" r="80" />
+            <line x1="300" y1="10" x2="300" y2="590" /><line x1="10" y1="300" x2="590" y2="300" />
+            <path class="radar-sweep" d="M300 300 L300 10 A290 290 0 0 1 505 95 Z" />
+          </svg>
+          <div class="hero-scan"></div>
+        </div>
+
+        <div class="hero-inner">
+          <div class="eyebrow"><span class="pulse"></span>Enterprise policy intelligence</div>
+          <h1><span class="brand-scribe">SCRIBE</span></h1>
+          <p class="lede">Your Enterprise Knowledge Assistant.</p>
+          <div class="ask-bar">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+            <input id="query-input" type="text" placeholder="Ask Scribe anything…" autocomplete="off" aria-label="Question input">
+            <button class="btn btn-primary btn-sm" id="btn-submit">Ask</button>
+          </div>
+          <div class="chips">
+            <button class="chip" data-query="What is our remote work policy?">Remote work policy</button>
+            <button class="chip" data-query="What is the annual leave policy?">Annual leave</button>
+            <button class="chip" data-query="Show me the restrictions in the Vendor ABC contract.">Vendor ABC restrictions</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Live ticker -->
+      <div class="ticker" aria-label="Live activity log">
+        <div class="ticker-label"><span class="rec-dot"></span>Live activity log · all agents</div>
+        <div class="ticker-track"><div class="ticker-inner" id="ticker-inner"><span class="ticker-empty">Awaiting activity…</span></div></div>
+      </div>
+
+      <!-- Workspace -->
+      <section class="workspace" id="workspace">
+        <aside class="history" id="history">
+          <div class="history-head">
+            <span class="label">Chat history</span>
+            <button class="btn btn-primary" id="btn-new-chat" style="border-radius: 20px; background: linear-gradient(135deg, #6366f1, #3b82f6); color: white; border: none; font-weight: 600; padding: 6px 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2); transition: all 0.2s ease;">✨ New chat</button>
+          </div>
+          <div class="history-list" id="history-list"><div class="history-empty">Loading…</div></div>
+          <div class="history-foot">Every conversation is stored in the database.</div>
+        </aside>
+
+        <div class="chat" id="chat">
+          <div class="chat-head">
+            <div class="chat-title">
+              <button class="icon-btn history-toggle" id="history-toggle" aria-label="Toggle chat history">☰</button>
+              <span id="chat-title-text">New conversation</span>
+              <span class="badge ok" id="chat-status-badge">Ready</span>
+            </div>
+            <div class="chat-meta">LangGraph active · zero-leakage privacy</div>
+          </div>
+
+          <div class="chat-stream" id="chat-stream" aria-live="polite"></div>
+
+          <div class="composer">
+            <button class="icon-btn" id="chat-attach" title="Add a document to the knowledge base" aria-label="Attach a document" onclick="document.getElementById('chat-file-input').click()">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.4 11.6-9.2 9.2a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/></svg>
+            </button>
+            <input type="text" id="chat-input" placeholder="Ask a follow-up…" autocomplete="off" aria-label="Follow-up question">
+            <input type="file" id="chat-file-input" style="display: none;" accept=".txt,.md,.pdf,.csv" onchange="uploadFromChat(this.files[0]); this.value=''">
+            <button class="btn btn-primary btn-sm" id="chat-send">Send</button>
+          </div>
+        </div>
+
+
+      </section>
+
+      <!-- Numbers -->
+      <section class="band">
+        <div class="eyebrow-l">By the numbers</div>
+        <div class="stats">
+          <div class="stat"><div class="stat-num" id="stat-documents" data-count="0">0</div><div class="stat-label">Documents indexed</div></div>
+          <div class="stat"><div class="stat-num" id="stat-policies" data-count="0">0</div><div class="stat-label">Corporate policies</div></div>
+          <div class="stat"><div class="stat-num" id="stat-agents" data-count="0">0</div><div class="stat-label">Specialised agents</div></div>
+          <div class="stat"><div class="stat-num" id="stat-chats" data-count="0">0</div><div class="stat-label">Conversations stored</div></div>
+        </div>
+      </section>
+
+      <!-- Diagnosis + scenarios -->
+      <section class="section">
+        <div class="eyebrow-l">The diagnosis</div>
+        <h2 class="display"><span id="dx-docs">Eighty-plus</span> documents.<br>Six teams. <span class="dim">One answer.</span></h2>
+        <p class="section-lede">Policies live in one portal, contracts in another, product specs in a third. Nobody is sure which version is current, and nobody gets called at 3&nbsp;a.m. when someone needs to know. Ask once — get the cited answer.</p>
+
+
+      </section>
+
+      <!-- Pillars -->
+      <section class="section">
+        <div class="eyebrow-l">The orchestrated equation</div>
+        <h2 class="display">Retrieval + Agents + Humans.</h2>
+        <div class="pillars">
+          <article class="pillar">
+            <div class="pillar-art art-1" aria-hidden="true"></div>
+            <div class="mono accent">01 · Permission-aware retrieval</div>
+            <h3>See everything you are allowed to.</h3>
+            <p>Hybrid vector and keyword search across policies, products and contracts. Role checks run before any text is used, so restricted documents never reach an answer.</p>
+          </article>
+          <article class="pillar">
+            <div class="pillar-art art-2" aria-hidden="true"></div>
+            <div class="mono accent">02 · Agent orchestration</div>
+            <h3>Nine specialists. One chain of command.</h3>
+            <p>A supervisor routes each question to the Policy, Product, Employee or Contract agent, a planner breaks down complex requests, and a verifier checks every claim against its evidence.</p>
+          </article>
+          <article class="pillar">
+            <div class="pillar-art art-3" aria-hidden="true"></div>
+            <div class="mono accent">03 · Human governance</div>
+            <h3>Receipts for everything.</h3>
+            <p>Actions that change company data stop for human approval. Every decision, query and upload lands in an audit ledger, and every chat is stored in the database.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Comparison -->
+      <section class="section">
+        <div class="eyebrow-l">The competitive edge</div>
+        <h2 class="display">Search bars can't. Chatbots don't.<br><span class="dim">SCRIBE will.</span></h2>
+        <div class="table-wrap">
+          <table class="compare">
+            <thead><tr><th></th><th>Keyword search</th><th>Generic chatbot</th><th class="us">SCRIBE</th></tr></thead>
+            <tbody>
+              <tr><td>Cites the exact section</td><td>—</td><td>—</td><td class="us">✓</td></tr>
+              <tr><td>Enforces role permissions</td><td>—</td><td>—</td><td class="us">✓</td></tr>
+              <tr><td>Verifies claims against evidence</td><td>—</td><td>—</td><td class="us">✓</td></tr>
+              <tr><td>Human approval for actions</td><td>—</td><td>—</td><td class="us">✓</td></tr>
+              <tr><td>Remembers the conversation</td><td>—</td><td>✓</td><td class="us">✓</td></tr>
+              <tr><td>Audit trail and stored history</td><td>—</td><td>—</td><td class="us">✓</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta">
+        <div class="eyebrow-l">For everyone who needs the right answer, right now</div>
+        <h2 class="display">Knowledge. <span class="dim">Handled.</span></h2>
+        <p class="section-lede">One place. One set of receipts. Start with a question, or add your own documents.</p>
+        <div class="cta-actions">
+          <a href="#knowledge" class="btn btn-primary" id="cta-ask">Ask a question →</a>
+          <a href="#sources" class="btn btn-outline" data-nav="sources">Upload a document →</a>
+        </div>
+      </section>
+    </section>
+
+    <!-- ============ 2. AGENTS ============ -->
+    <section id="view-agents" class="view">
+      <div class="page-head">
+        <div class="eyebrow-l">The force</div>
+        <h1 class="page-title">Specialised autonomous agents</h1>
+        <p class="page-sub">Nine modular domain agents coordinated dynamically through LangGraph state reduction.</p>
+      </div>
+      <div class="agents-grid" id="agents-grid"></div>
+    </section>
+
+    <!-- ============ 3. LIBRARY ============ -->
+    <section id="view-sources" class="view">
+      <div class="page-head">
+        <div class="eyebrow-l">The library</div>
+        <h1 class="page-title">Enterprise knowledge sources</h1>
+        <p class="page-sub" id="sources-sub">Indexed governance policies, insurance underwriting specifications and vendor agreements.</p>
+      </div>
+
+      <!-- Upload Center -->
+      <div class="upload-card" id="upload-center">
+        <div class="upload-main">
+          <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose files to upload">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0 4 4m-4-4L8 8"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+            <div class="dz-title">Drop files here or click to browse</div>
+            <div class="dz-sub" id="dz-sub">.md · .txt · .csv · .json · .docx · .pdf — up to 5 MB each</div>
+          </div>
+          <input type="file" id="file-input" hidden multiple accept=".md,.txt,.log,.csv,.json,.docx,.pdf">
+          <ul class="upload-list" id="upload-list"></ul>
+        </div>
+        <div class="upload-form">
+          <div class="label">Upload Center</div>
+          <div class="field">
+            <span class="field-label">Category</span>
+            <div class="segmented" id="upload-category">
+              <button type="button" class="seg active" data-value="policy">Policy</button>
+              <button type="button" class="seg" data-value="product">Product</button>
+              <button type="button" class="seg" data-value="contract">Contract</button>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label" for="upload-title">Title <span class="dim">(optional, single file)</span></label>
+            <input class="input" id="upload-title" type="text" maxlength="120" placeholder="Taken from the file if left blank">
+          </div>
+          <div class="field">
+            <label class="field-label" for="upload-dept">Department <span class="dim">(optional)</span></label>
+            <input class="input" id="upload-dept" type="text" maxlength="80" placeholder="e.g. Facilities">
+          </div>
+          <div class="field">
+            <span class="field-label">Who can read it</span>
+            <div class="role-checks" id="upload-roles">
+              <label><input type="checkbox" value="employee" checked> Employee</label>
+              <label><input type="checkbox" value="manager" checked> Manager</label>
+              <label><input type="checkbox" value="hr" checked> HR</label>
+              <label><input type="checkbox" value="legal" checked> Legal</label>
+              <label><input type="checkbox" value="admin" checked disabled> Admin</label>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-block" id="btn-upload" disabled>Upload &amp; index</button>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="filters" id="source-filters">
+          <button class="filter active" data-filter="all">All</button>
+          <button class="filter" data-filter="policy">Policies</button>
+          <button class="filter" data-filter="product">Products</button>
+          <button class="filter" data-filter="contract">Contracts &amp; SLAs</button>
+          <button class="filter" data-filter="uploaded">Uploaded</button>
+        </div>
+        <input class="input search" id="source-search" type="search" placeholder="Search title, ID or department…" aria-label="Search documents">
+      </div>
+
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Document</th><th>Type</th><th>Department</th><th>Version</th><th>Updated</th><th>Chunks</th><th>Access roles</th><th></th></tr></thead>
+          <tbody id="sources-body"></tbody>
+        </table>
+      </div>
+      <div class="pager" id="sources-pager"></div>
+    </section>
+
+    <!-- ============ 4. ACTIVITY ============ -->
+    <section id="view-activity" class="view">
+      <div class="page-head">
+        <div class="eyebrow-l">The receipts</div>
+        <h1 class="page-title">Telemetry &amp; audit ledger</h1>
+        <p class="page-sub">Audit trail of agent dispatches, human approvals, uploads and security access decisions.</p>
+      </div>
+      <div class="metrics">
+        <div class="metric"><span class="metric-label">Audit events shown</span><span class="metric-val" id="metric-total-events">0</span><span class="metric-sub">Logged in the database</span></div>
+        <div class="metric"><span class="metric-label">Average agent latency</span><span class="metric-val" id="metric-avg-latency">—</span><span class="metric-sub">Per logged step</span></div>
+        <div class="metric"><span class="metric-label">Evidence grounding rate</span><span class="metric-val" id="metric-verification-rate">—</span><span class="metric-sub">Verified claims</span></div>
+        <div class="metric"><span class="metric-label">Human approvals</span><span class="metric-val" id="metric-total-approvals">0</span><span class="metric-sub">Action requests</span></div>
+        <div class="metric"><span class="metric-label">Stored messages</span><span class="metric-val" id="metric-chat-messages">0</span><span class="metric-sub">Across all chats</span></div>
+      </div>
+      <h3 class="table-title">Recent execution audit logs</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Log ID</th><th>Timestamp</th><th>User</th><th>Action</th><th>Agent</th><th>Details</th><th>Status</th><th>Duration</th></tr></thead>
+          <tbody id="activity-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 5. EVALUATION ============ -->
+    <section id="view-evaluation" class="view">
+      <div class="page-head page-head-row">
+        <div>
+          <div class="eyebrow-l">Trust, but verify</div>
+          <h1 class="page-title">RAG &amp; agentic evaluation benchmark</h1>
+          <p class="page-sub">Ground-truth benchmark over gold-standard enterprise queries.</p>
+        </div>
+        <button class="btn btn-outline" id="btn-rerun">Re-run benchmark</button>
+      </div>
+      <div class="metrics">
+        <div class="metric"><span class="metric-label">MRR</span><span class="metric-val" id="eval-mrr">—</span><span class="metric-sub">Rank precision</span></div>
+        <div class="metric"><span class="metric-label">nDCG@5</span><span class="metric-val" id="eval-ndcg">—</span><span class="metric-sub">Discounted gain</span></div>
+        <div class="metric"><span class="metric-label">Retrieval accuracy</span><span class="metric-val" id="eval-retrieval">—</span><span class="metric-sub">Top-k relevant hits</span></div>
+        <div class="metric"><span class="metric-label">Answer groundedness</span><span class="metric-val" id="eval-groundedness">—</span><span class="metric-sub">Evidence supported</span></div>
+        <div class="metric"><span class="metric-label">Citation accuracy</span><span class="metric-val" id="eval-citation">—</span><span class="metric-sub">Direct section links</span></div>
+      </div>
+      <h3 class="table-title">Benchmark test cases</h3>
+      <div class="table-wrap">
+        <table class="data">
+          <thead><tr><th>Test</th><th>Category</th><th>Query</th><th>Role</th><th>MRR</th><th>nDCG</th><th>Grounded</th><th>Latency</th><th>Result</th></tr></thead>
+          <tbody id="eval-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============ 6. UPDATES ============ -->
+    <section id="view-updates" class="view">
+      <div class="page-head">
+        <div class="eyebrow-l">What's new</div>
+        <h1 class="page-title">Updates &amp; upgrades</h1>
+        <p class="page-sub">Release notes for the platform, and what is planned next.</p>
+      </div>
+      <div class="timeline" id="updates-list"></div>
+      <div class="eyebrow-l" style="margin-top:56px">Planned</div>
+      <h3 class="display-sm">On the roadmap</h3>
+      <div class="roadmap" id="roadmap-list"></div>
+    </section>
+
+    <!-- ============ 7. FAQ ============ -->
+    <section id="view-faq" class="view">
+      <div class="page-head">
+        <div class="eyebrow-l">Questions, answered</div>
+        <h1 class="page-title">Frequently asked questions</h1>
+        <p class="page-sub">Everything about chats, uploads, permissions and the policy library.</p>
+      </div>
+      <div class="toolbar">
+        <div class="filters" id="faq-filters"></div>
+        <input class="input search" id="faq-search" type="search" placeholder="Search the FAQ…" aria-label="Search the FAQ">
+      </div>
+      <div class="faq" id="faq-list"></div>
+    </section>
+
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <div class="brand brand-foot">
+          <svg class="brand-mark" viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><path d="M16 2 4 7v9c0 7 5 12.5 12 14 7-1.5 12-7 12-14V7L16 2Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="m11 16.5 4 4 7-8.5" stroke="var(--accent)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="brand-text"><strong>ENTERPRISE KNOWLEDGE</strong></span>
+        </div>
+        <p class="footer-mission">On a mission to make every answer in the enterprise grounded, cited and accountable.</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="#agents" data-nav="agents">Agents</a>
+        <a href="#sources" data-nav="sources">Library</a>
+        <a href="#activity" data-nav="activity">Activity</a>
+        <a href="#updates" data-nav="updates">Updates</a>
+        <a href="#faq" data-nav="faq">FAQ</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      © 2026 Acme Enterprise · Demonstration platform with sample data · Not legal advice<br>
+      <span style="font-size: 14px; font-weight: 500; color: #fff; margin-top: 8px; display: inline-block;">Made by Shiv</span>
+    </div>
+  </footer>
+
+  <!-- Document preview modal -->
+  <div class="modal" id="doc-modal" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-doc-title">
+      <button class="modal-close" id="modal-close" aria-label="Close">✕</button>
+      <h2 id="modal-doc-title">Document</h2>
+      <div id="modal-doc-meta" class="modal-meta"></div>
+      <div id="modal-doc-content" class="md"></div>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toasts" aria-live="polite"></div>
+
+  <script src="/js/app.min.js?v=1"></script>
+</body>
+</html>

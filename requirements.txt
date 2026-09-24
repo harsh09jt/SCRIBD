@@ -1,0 +1,8 @@
+# The application runs on the Python standard library alone (Python 3.9+).
+# Required for Gemini + .env support
+python-dotenv>=1.0.1
+google-generativeai>=0.8.3
+
+# Optional extras:
+pypdf>=4.0        # enables uploading text-based PDF files
+# chromadb        # optional persistent vector store (auto-detected if installed)

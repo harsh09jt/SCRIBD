@@ -1,0 +1,192 @@
+{
+  "updates": [
+    {
+      "version": "v2.0",
+      "date": "2026-09-24",
+      "title": "Upload Center, 80-policy library, saved chats and a new interface",
+      "tag": "Latest",
+      "items": [
+        {
+          "type": "New",
+          "text": "Upload Center: add your own .md, .txt, .csv, .json, .docx or .pdf files. They are indexed instantly and the agents can answer from them straight away."
+        },
+        {
+          "type": "New",
+          "text": "Policy library grew from 14 to 80 policies covering HR, ethics, legal and compliance, IT security, finance, health and safety, sustainability and customer care."
+        },
+        {
+          "type": "New",
+          "text": "Every conversation is now stored in the database. Reopen, continue or delete past chats from the Chat History panel."
+        },
+        {
+          "type": "New",
+          "text": "FAQ and Updates sections."
+        },
+        {
+          "type": "Improved",
+          "text": "Redesigned interface: dark, mission-control look with a live activity ticker, headline metrics and pillar sections."
+        },
+        {
+          "type": "Improved",
+          "text": "Better retrieval: singular/plural matching and smarter chunking of long documents. Policy questions now route to the Policy Agent even without the word 'policy'."
+        },
+        {
+          "type": "Improved",
+          "text": "Inspect on the Library page now opens the real document text, with the same role checks as chat."
+        },
+        {
+          "type": "Security",
+          "text": "Restricted documents are now blocked whenever they are the best match for a question, not only for the CEO contract. Uploaded files can never change their own access roles."
+        }
+      ]
+    },
+    {
+      "version": "v1.0",
+      "date": "2026-09-22",
+      "title": "Foundation release",
+      "tag": "Released",
+      "items": [
+        {
+          "type": "New",
+          "text": "Nine specialised agents orchestrated by a LangGraph-style workflow: Supervisor, Planner, Employee, Product, Policy, Contract, Retrieval, Verification and Response."
+        },
+        {
+          "type": "New",
+          "text": "Permission-aware hybrid RAG with role-based access control applied before any text reaches the answer."
+        },
+        {
+          "type": "New",
+          "text": "Claim-level evidence verification with grounding scores."
+        },
+        {
+          "type": "New",
+          "text": "Human-in-the-loop approval for sensitive actions such as remote-work requests, with a full audit ledger."
+        },
+        {
+          "type": "New",
+          "text": "Multi-turn conversational memory and a built-in evaluation benchmark."
+        }
+      ]
+    }
+  ],
+  "roadmap": [
+    {
+      "title": "Single sign-on",
+      "text": "Replace the persona switcher with real authentication so roles come from your identity provider."
+    },
+    {
+      "title": "OCR for scanned PDFs",
+      "text": "Read image-only PDFs and scanned contracts."
+    },
+    {
+      "title": "Managed database",
+      "text": "Move chat history and uploads from the local SQLite file to PostgreSQL for multi-user deployments."
+    },
+    {
+      "title": "Streaming answers",
+      "text": "Show the answer as it is written and let people rate each response."
+    }
+  ],
+  "faq": [
+    {
+      "category": "Getting started",
+      "q": "What is the Enterprise Expert Knowledge Worker?",
+      "a": "It is an AI knowledge assistant for your company. It answers questions from policies, insurance product specifications and vendor contracts, shows the exact section it used, checks each claim against the evidence, and asks a human to approve any action that would change company data."
+    },
+    {
+      "category": "Getting started",
+      "q": "What kind of questions can I ask?",
+      "a": "Try 'How many days of annual leave do I get?', 'Can I accept a gift from a supplier?', 'What is the notice period for a senior manager?', 'Show me the restrictions in the Vendor ABC contract' or 'Can Rahul purchase Product X and what documents are required?'. Use the suggestion chips on the home page to see each agent in action."
+    },
+    {
+      "category": "Getting started",
+      "q": "What are the roles in the top-right corner?",
+      "a": "They are demo personas (Employee, Manager, HR, Legal and Admin). Each one has different document permissions and its own chat history, so you can see role-based access control at work."
+    },
+    {
+      "category": "Chat and history",
+      "q": "Are my chats saved?",
+      "a": "Yes. Every question and answer, including citations, plans and approval cards, is stored in the database (tables chat_sessions and chat_messages in data/enterprise.db). Saved chats appear in the Chat History panel next to the conversation."
+    },
+    {
+      "category": "Chat and history",
+      "q": "Can I continue an old conversation?",
+      "a": "Click it in Chat History. The full conversation is restored and the assistant remembers the last 8 turns, so follow-ups such as 'What documents are required for it?' keep working."
+    },
+    {
+      "category": "Chat and history",
+      "q": "How do I delete a chat?",
+      "a": "Hover over a chat in Chat History and click the bin icon. Deleting removes the chat and all its messages from the database permanently."
+    },
+    {
+      "category": "Chat and history",
+      "q": "Why don't I see chats from another persona?",
+      "a": "Chat history is kept per role. An answer can contain text from documents that only that role may read, so chats are never shown to a different role."
+    },
+    {
+      "category": "Documents and uploads",
+      "q": "How do I add my own documents?",
+      "a": "Open the Library page and use the Upload Center, or click the paperclip in the chat box. Choose a category, department and which roles may read the file. Supported types: .md, .txt, .csv, .json, .docx and .pdf, up to 5 MB each."
+    },
+    {
+      "category": "Documents and uploads",
+      "q": "How soon can I ask questions about an uploaded file?",
+      "a": "Immediately. The file is split into sections and indexed as soon as the upload finishes."
+    },
+    {
+      "category": "Documents and uploads",
+      "q": "Why was my PDF rejected?",
+      "a": "PDF reading needs the optional pypdf package (pip install pypdf, then restart the server). Scanned PDFs that contain only images have no text to read; run OCR first or upload a Word or text version."
+    },
+    {
+      "category": "Documents and uploads",
+      "q": "How do I remove an uploaded document?",
+      "a": "In the Library table, click Delete next to it. Administrators can delete any uploaded document; other roles can delete documents uploaded by their own role. Built-in library documents cannot be deleted from the interface."
+    },
+    {
+      "category": "Security and permissions",
+      "q": "Who can read a document?",
+      "a": "Each document lists the roles allowed to read it. The check happens before any text is used to build an answer, so restricted content never reaches the response."
+    },
+    {
+      "category": "Security and permissions",
+      "q": "What happens if I ask about a restricted document?",
+      "a": "You get an Access Denied message that names the document and the roles that may read it. Switch to an authorised persona, or ask your manager to request access."
+    },
+    {
+      "category": "Security and permissions",
+      "q": "Is this real authentication?",
+      "a": "No. This build uses a persona switcher to demonstrate role-based access. Before real use, connect it to your identity provider (for example single sign-on) so the role comes from a verified login."
+    },
+    {
+      "category": "Policy library",
+      "q": "Which policies are included?",
+      "a": "80 policies: HR and people, ethics and compliance, legal, procurement, IT and information security, finance, health and safety, sustainability and customer care. Open the Library page and filter by Policies to browse them all."
+    },
+    {
+      "category": "Policy library",
+      "q": "Are these real company policies?",
+      "a": "No. They are generic templates written for the fictional company Acme Enterprise, modelled on what large organisations typically publish. Have Legal and HR review and adapt them before real-world use."
+    },
+    {
+      "category": "Policy library",
+      "q": "How do I add or update a policy?",
+      "a": "The easiest way is the Upload Center. You can also drop a markdown file into data/policies and restart the server. Follow the header format used by the existing files (Document ID, Version, Last Updated, Department, Owner, Access Roles)."
+    },
+    {
+      "category": "Troubleshooting",
+      "q": "How does the FAQ update itself?",
+      "a": "Every question asked in the chat is counted across all users and roles. When the same question has been asked more than 15 times, it is added to the top of this page automatically, under 'Most asked (auto-updated)', with its answer and sources. To keep restricted information out of the FAQ, an answer is only added if it is also available to the Employee role and does not involve a specific person's data. Entries disappear again if their source document is deleted or restricted."
+    },
+    {
+      "category": "Troubleshooting",
+      "q": "The answer says 'Insufficient Evidence Located'. What now?",
+      "a": "Rephrase using the name of the policy, product or contract, for example 'gifts and hospitality policy' instead of 'freebies'. Then check on the Library page that the document you expect is listed."
+    },
+    {
+      "category": "Troubleshooting",
+      "q": "The server says the port is already in use.",
+      "a": "Start it on another port, for example: python3 app.py 8080, and open http://127.0.0.1:8080."
+    }
+  ]
+}

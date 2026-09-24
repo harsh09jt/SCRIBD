@@ -1,0 +1,9 @@
+{
+  "name": "enterprise-expert-knowledge-worker",
+  "version": "1.0.0",
+  "description": "Agentic AI Platform",
+  "scripts": {
+    "dev": ".\\.venv\\Scripts\\python app.py",
+    "start": ".\\.venv\\Scripts\\python app.py"
+  }
+}

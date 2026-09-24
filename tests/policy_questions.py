@@ -1,0 +1,48 @@
+"""
+Natural-language questions about the extended policy library and the document that should answer each.
+Used by the retrieval-quality test in test_knowledge_worker.py.
+Format: (question, role asking, text that must appear in the expected document's title)
+"""
+
+POLICY_QUESTIONS = [
+    ("How many days of annual leave do I get?", "employee", "Annual, Sick, Casual"),
+    ("What is the notice period for a senior manager?", "employee", "Resignation, Notice Period"),
+    ("Can I accept a gift from a supplier?", "employee", "Gifts, Hospitality"),
+    ("What is the password policy?", "employee", "Password and Authentication"),
+    ("Do I need MFA to connect to the VPN?", "employee", "Password and Authentication"),
+    ("How long do I have to report a security incident?", "employee", "Security Incident Response"),
+    ("What are the blackout periods for insider trading?", "employee", "Insider Trading"),
+    ("What is the employee referral bonus?", "employee", "Referral"),
+    ("How does the sabbatical work?", "employee", "Sabbatical"),
+    ("Can I use ChatGPT with customer data?", "employee", "Artificial Intelligence"),
+    ("How fast must critical vulnerabilities be patched?", "employee", "Vulnerability and Patch"),
+    ("What is the sexual harassment complaint process?", "employee", "Anti-Harassment"),
+    ("Explain the purchase order policy", "employee", "Procurement and Sourcing"),
+    ("What is the dress code?", "employee", "Dress Code"),
+    ("How does the annual bonus work?", "employee", "Compensation, Salary Bands"),
+    ("What is the company match for retirement savings?", "employee", "Retirement Savings"),
+    ("How do stock options vest?", "employee", "Equity, Stock Options"),
+    ("How do I disclose a conflict of interest?", "employee", "Conflict of Interest"),
+    ("How long are financial records retained?", "employee", "Records Retention"),
+    ("Which open source licenses are allowed?", "employee", "Open Source"),
+    ("What is the corporate credit card limit?", "employee", "Corporate Credit Card"),
+    ("What are the fire evacuation rules?", "employee", "Emergency Evacuation"),
+    ("What are our net-zero emissions targets?", "employee", "Environmental Sustainability"),
+    ("How quickly are customer complaints resolved?", "employee", "Customer Complaint"),
+    ("What are the underwriting authority limits?", "manager", "Underwriting Authority"),
+    ("What are the spending approval limits for a Director?", "manager", "Delegation of Authority"),
+    ("How do I request a disability accommodation?", "employee", "Disability"),
+    ("What is the visitor policy for the office?", "employee", "Physical Security"),
+    ("How long is the probation period?", "employee", "Onboarding and Probation"),
+    ("Do we have mental health days?", "employee", "Wellbeing"),
+    ("What is the sanctions screening process?", "employee", "Sanctions"),
+    ("How are relocation expenses covered?", "employee", "Relocation"),
+    ("Can employees talk to the press?", "employee", "Media Relations"),
+    ("What is the classification for customer personal data?", "employee", "Data Classification"),
+    ("How many hours of volunteer time do we get?", "employee", "Volunteer"),
+    ("What is the code review requirement for software changes?", "employee", "Secure Software Development"),
+    ("What is the anti-bribery policy?", "employee", "Anti-Bribery"),
+    ("How are progressive disciplinary warnings handled?", "manager", "Disciplinary Action"),
+    ("What is the RTO for disaster recovery?", "employee", "Backup"),
+    ("How long must a payslip be available and when is salary paid?", "employee", "Payroll"),
+]
